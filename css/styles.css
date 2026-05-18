@@ -616,59 +616,108 @@ html {
 }
 
 /* --- ADAPTABILIDAD TOTAL PARA MÓVILES (Celulares y Tablets) --- */
+/* --- ADAPTABILIDAD EN MÓVILES PERFECTAMENTE CENTRADA (AJUSTE DERECHA) --- */
 @media screen and (max-width: 768px) {
     .book-container {
-        max-width: 100%;
-        height: 420px; /* Reducimos un poco la altura para pantallas chicas */
-        padding: 0 10px;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: 400px !important; 
+        display: flex !important;
+        justify-content: center !important; 
+        align-items: center !important;
+        perspective: 2000px !important;
+        overflow: hidden !important; 
+        padding: 0 !important;
+        margin: 0 auto !important;
     }
 
     .book {
-        width: 280px; /* Ancho ideal para que quepa una página entera en cualquier celular */
-        height: 380px;
-        /* En móvil el libro ya no se desplaza horizontalmente al centro, se queda fijo */
-        transform: none !important; 
+        width: 180px !important; /* Ancho de una sola página */
+        height: 280px !important;
+        position: relative !important;
+        transform-style: preserve-3d !important;
+        transition: transform 0.5s ease-in-out, left 0.5s ease-in-out !important;
+        
+        /* Estado inicial (Cerrado - Portada) */
+        transform: scale(0.85) !important; 
+        margin: 0 auto !important;
+        left: 0 !important;
     }
 
-    /* Modificamos los puntos de giro para que actúe como un visor de tarjetas superior */
+    /* --- INCREMENTO DE EMPUJE HACIA LA DERECHA --- */
+    /* Subimos a 90px para desplazar el libro lo necesario hacia la derecha 
+       y lograr que ambas páginas abiertas queden con el mismo margen a los lados */
+    .book[style*="translateX"] {
+        left: 90px !important; 
+    }
+    
+    /* Cuando regresa al estado cerrado (Portada) vuelve a su posición inicial */
+    .book[style*="translateX(0%)"] {
+        left: 0 !important;
+    }
+
     .paper {
-        transform-origin: center; /* En móvil gira o cambia desde el centro */
+        position: absolute !important;
+        width: 100% !important;
+        height: 100% !important;
+        top: 0 !important;
+        left: 0 !important;
+        transform-origin: left center !important;
+        transition: transform 0.5s cubic-bezier(0.645, 0.045, 0.355, 1) !important;
+        transform-style: preserve-3d !important;
     }
 
     .front, .back {
-        width: 100%;
-        height: 100%;
-        border-radius: 15px !important; /* Bordes redondeados parejos en móvil */
-        padding: 15px;
-        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        position: absolute !important;
+        width: 100% !important;
+        height: 100% !important;
+        top: 0 !important;
+        left: 0 !important;
+        border-radius: 0 8px 8px 0 !important;
+        padding: 12px !important;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
+        backface-visibility: hidden !important;
+        background-color: #ffffff !important;
+        box-sizing: border-box !important;
     }
 
-    /* En móvil, para evitar el efecto de texto en espejo si el navegador procesa mal, 
-       ocultamos los reversos que no están activos */
-    .paper:not(.flipped) .back {
-        display: none;
-    }
-    .paper.flipped .front {
-        display: none;
+    .back {
+        transform: rotateY(180deg) !important;
+        border-radius: 8px 0 0 8px !important;
     }
 
-    /* Forzamos a que la página que ya se volteó se mueva por completo del campo visual */
     .paper.flipped {
-        transform: translateX(-150%) rotate(-10deg) !important; /* Se desliza hacia la izquierda de forma fluida */
-        opacity: 0;
+        transform: rotateY(-180deg) !important;
     }
 
-    /* Ajuste de las imágenes internas en pantallas móviles */
+    /* Contenido interno adaptado */
+    .content {
+        display: flex !important;
+        flex-direction: column !important;
+        height: 100% !important;
+    }
+
     .content img {
-        max-height: 120px !important; /* Imagen un poco más pequeña para dar aire al texto */
-        margin-bottom: 10px !important;
+        width: 100% !important;
+        max-height: 95px !important;
+        object-fit: cover !important;
+        border-radius: 6px !important;
+        margin-bottom: 6px !important;
     }
 
     .content h2 {
-        font-size: 1.15rem;
+        font-size: 0.9rem !important;
+        margin-bottom: 2px !important;
+    }
+
+    .content h3 {
+        font-size: 0.75rem !important;
+        margin-bottom: 2px !important;
+        color: #555 !important;
     }
 
     .content p {
-        font-size: 0.8rem;
+        font-size: 0.7rem !important;
+        line-height: 1.2 !important;
     }
 }
