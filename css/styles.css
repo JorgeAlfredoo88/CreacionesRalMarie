@@ -1,0 +1,674 @@
+/* Variables para facilitar cambios globales */
+:root {
+    --verde: #8ED973;
+    --coral: #FF7F71;
+    --azul-fondo: #F0F9FF;
+    --texto: #2D3436;
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    color: var(--texto);
+    scroll-behavior: smooth; /* Desplazamiento suave */
+}
+
+.navbar {
+    position: sticky; /* Se queda fijo al hacer scroll */
+    top: 0;
+    z-index: 1000; /* Asegura que esté por encima de todo */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 5%;
+    background: white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+/* Quitamos los puntos de la lista y la ponemos horizontal */
+.nav-menu ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-menu li {
+    margin-left: 25px;
+}
+
+.nav-menu a {
+    text-decoration: none;
+    color: var(--texto);
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.nav-menu a:hover {
+    color: var(--verde); /* Cambio dinámico al pasar el mouse */
+}
+
+/* Estilos del menú hamburguesa (oculto por defecto) */
+.menu-toggle {
+    display: none;
+    cursor: pointer;
+}
+
+.bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin: 5px auto;
+    background-color: var(--texto);
+    transition: all 0.3s ease-in-out;
+}
+
+/* --- RESPONSIVE (Móviles) --- */
+@media (max-width: 768px) {
+    .menu-toggle { display: block; }
+
+    .nav-menu {
+        position: absolute;
+        top: 70px; /* Debajo del header */
+        left: -100%; /* Escondido a la izquierda */
+        flex-direction: column;
+        background-color: white;
+        width: 100%;
+        text-align: center;
+        transition: 0.3s;
+        box-shadow: 0 10px 10px rgba(0,0,0,0.05);
+    }
+
+    .nav-menu.active {
+        left: 0; /* Aparece dinámicamente */
+    }
+
+    .nav-menu ul { flex-direction: column; }
+    .nav-menu li { margin: 15px 0; }
+}
+.logo { height: 60px; }
+
+.hero {
+    height: 100vh; /* Ocupa toda la pantalla para mayor impacto */
+    position: relative;
+    background: url('../img/bg.jpg') center/cover no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+}
+
+/* El filtro negro dinámico */
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Degradado de negro sólido a un tono más suave */
+    background: linear-gradient(
+        135deg, 
+        rgba(0, 0, 0, 0.8) 0%, 
+        rgba(0, 0, 0, 0.4) 100%
+    );
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2; /* Importante para que el texto esté sobre el filtro */
+    padding: 0 20px;
+}
+
+.hero-content h1 {
+    font-size: 4rem;
+    font-weight: 900;
+    letter-spacing: -1px;
+    margin-bottom: 15px;
+    /* Usamos el verde del logo para resaltar una palabra */
+    color: #fff;
+}
+
+.highlight {
+    color: var(--verde); /* Color de ral marie.jpg */
+}
+
+.hero-content p {
+    font-size: 1.4rem;
+    max-width: 600px;
+    margin: 0 auto 40px;
+    opacity: 0.9;
+}
+
+.btn-main {
+    background-color: var(--coral);
+    color: white;
+    padding: 12px 30px;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: bold;
+    transition: 0.3s transform ease; /* Función de suavizado */
+}
+
+.btn-main:hover {
+    transform: scale(1.1); /* Efecto dinámico de agrandar */
+}
+
+/* El Grid dinámico */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    padding: 50px 5%;
+}
+
+.card {
+    background: var(--azul-fondo);
+    padding: 20px;
+    border-radius: 20px;
+    text-align: center;
+    opacity: 0; /* Para el efecto de aparecer con JS */
+    transform: translateY(30px);
+
+    display: flex;
+    flex-direction: column;
+}
+
+/* Clase que activaremos con JS */
+.card.visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition: 1s ease-out;
+}
+
+/* Títulos Llamativos */
+.section-title {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.section-title h2 {
+    font-size: 2.5rem;
+    color: var(--texto);
+    margin-bottom: 10px;
+}
+
+.underline {
+    display: block;
+    width: 80px;
+    height: 4px;
+    background: var(--verde); /* Color del logo */
+    margin: 0 auto;
+    border-radius: 10px;
+}
+
+/* Tarjetas Pro */
+.card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden; /* Corta la imagen si sale de los bordes */
+    box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+    transition: 0.4s all ease;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.card:hover {
+    transform: translateY(-15px);
+    box-shadow: 0 20px 40px rgba(142, 217, 115, 0.2); /* Sombra color verde logo */
+}
+
+.card-img-container {
+    width: 100%;
+    height: 250px; /* Tamaño fijo para todas las imágenes */
+    overflow: hidden;
+}
+
+.card-img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Función clave: centra y recorta la imagen sin deformarla */
+    transition: 0.5s transform ease;
+}
+
+.card:hover img {
+    transform: scale(1.1); /* Zoom dinámico */
+}
+
+.card-info { padding: 25px; 
+
+    /* Lo convertimos en flexbox vertical para empujar el botón */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Distribuye el espacio equitativamente */
+    align-items: center;
+}
+
+/* 1. Forzamos a la tarjeta a ser un bloque flexible vertical con altura del 100% */
+.card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+    transition: 0.4s all ease;
+    
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Obliga a todas las tarjetas de la fila a medir lo mismo */
+    box-sizing: border-box;
+}
+
+/* 2. El contenedor de información se estira para ocupar todo el espacio disponible */
+.card-info {
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* Absorbe el espacio vacío y empuja lo que esté abajo */
+}
+
+/* 3. Quitamos márgenes extra de títulos y textos para evitar desfases */
+.card-info h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.card-info p {
+    margin-top: 0;
+    margin-bottom: 25px; /* Separación fija con el botón */
+}
+
+/* 4. LA SOLUCIÓN DEFINITIVA: El botón se auto-empuja hasta el fondo de la tarjeta */
+.card-info .btn-secondary {
+    margin-top: auto; /* Truco de Flexbox: empuja el elemento al extremo inferior */
+    align-self: center; /* Mantiene el botón centrado horizontalmente */
+    width: fit-content; /* Evita que el botón se estire a lo ancho */
+}
+
+/* Footer Estilo Corporativo */
+.main-footer {
+    background: var(--azul-fondo);
+    padding: 60px 5% 20px;
+    margin-top: 100px;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.logo-footer { height: 80px; margin-bottom: 15px; }
+
+.footer-links ul { list-style: none; padding: 0; }
+.footer-links a { 
+    text-decoration: none; 
+    color: var(--texto); 
+    line-height: 2; 
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 50px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(0,0,0,0.1);
+    font-size: 0.9rem;
+}
+
+/* Botón Secundario (Explorar) */
+.btn-secondary {
+    background-color: transparent;
+    color: var(--verde);
+    border: 2px solid var(--verde);
+    padding: 10px 25px;
+    border-radius: 50px;
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    z-index: 1;
+    font-family: 'Segoe UI', sans-serif;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+}
+
+/* Efecto de relleno al pasar el mouse */
+.btn-secondary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background-color: var(--verde);
+    transition: all 0.4s ease;
+    z-index: -1;
+}
+
+.btn-secondary:hover {
+    color: white;
+    box-shadow: 0 5px 15px rgba(142, 217, 115, 0.4);
+}
+
+.btn-secondary:hover::before {
+    width: 100%;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-content {
+    animation: fadeInUp 1.2s ease-out;
+}
+
+/* --- ESTILOS DEL MODAL (Capa superior) --- */
+.modal-overlay {
+    display: none; /* Escondido por defecto */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95); /* Fondo negro profundo premium */
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-active {
+    display: flex; /* Se activa con JS */
+    animation: fadeIn 0.4s ease;
+}
+
+.modal-content {
+    position: relative;
+    width: 90%;
+    max-width: 900px;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.close-modal {
+    position: absolute;
+    top: -50px;
+    right: 20px;
+    color: white;
+    font-size: 50px;
+    cursor: pointer;
+    z-index: 2100;
+}
+
+/* --- ESTILOS DEL LIBRO (Catálogo) --- */
+.book-container {
+    position: relative;
+    width: 100%;
+    height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1500px; /* Profundidad 3D */
+}
+
+.book {
+    position: relative;
+    width: 350px;
+    height: 450px;
+    transition: transform 0.5s;
+    transform-style: preserve-3d;
+}
+
+.paper {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    perspective: 1500px;
+    transform-origin: left; /* Gira desde el lomo */
+    transition: transform 0.5s;
+}
+
+.front, .back {
+    background-color: white;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+    backface-visibility: hidden; /* Oculta la cara trasera al girar */
+    border: 1px solid #ddd;
+    border-radius: 0 15px 15px 0;
+}
+
+.back {
+    transform: rotateY(180deg);
+    z-index: 0;
+    border-radius: 15px 0 0 15px;
+}
+
+/* Estado de página girada */
+.flipped {
+    transform: rotateY(-180deg);
+    z-index: 10 !important;
+}
+
+/* Controles de navegación */
+.btns-nav {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.btns-nav button {
+    padding: 10px 25px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    background: var(--verde);
+    color: white;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btns-nav button:hover {
+    background: var(--coral);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* --- ESTILOS DEL LIBRO 3D EFECTO VOLTEO --- */
+.book-container {
+    position: relative;
+    width: 100%;
+    max-width: 700px;
+    height: 460px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 2000px; /* Determina la intensidad del efecto 3D a la vista */
+}
+
+.book {
+    position: relative;
+    width: 330px; /* Ancho de una sola página */
+    height: 430px;
+    transition: transform 0.6s ease;
+    transform-style: preserve-3d;
+}
+
+/* Cada hoja física */
+.paper {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    transform-origin: left center; /* Punto de pivote: el lomo izquierdo */
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    transform-style: preserve-3d;
+}
+
+/* Caras del papel */
+.front, .back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: white;
+    padding: 25px;
+    box-sizing: border-box;
+    backface-visibility: hidden; /* CRUCIAL: Oculta la cara contraria al girar */
+    border: 1px solid #ddd;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.front {
+    z-index: 2;
+    border-radius: 0 15px 15px 0;
+}
+
+.back {
+    z-index: 1;
+    transform: rotateY(180deg); /* Voltea la cara trasera por defecto para que al girar el papel se lea al derecho */
+    border-radius: 15px 0 0 15px;
+    background-color: #f9f9f9; /* Tono ligeramente diferente para simular reverso */
+}
+
+/* Estado cuando la hoja es volteada hacia la izquierda */
+.paper.flipped {
+    transform: rotateY(-180deg);
+}
+
+/* Estilos de contenido interno */
+.content {
+    text-align: center;
+    width: 100%;
+}
+
+.content h2 {
+    font-size: 1.3rem;
+    margin: 10px 0 5px 0;
+    color: #333;
+}
+
+.content h3 {
+    font-size: 0.95rem;
+    color: var(--verde, #8ed973);
+    margin-bottom: 10px;
+}
+
+.content p {
+    font-size: 0.85rem;
+    color: #666;
+    line-height: 1.4;
+}
+
+/* Botones de navegación */
+.btns-nav {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 25px;
+}
+
+.btns-nav button {
+    padding: 10px 25px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    background: #8ed973;
+    color: white;
+    font-weight: bold;
+    transition: 0.3s ease;
+}
+
+.btns-nav button:hover {
+    background: #e96f53;
+}
+
+html {
+    scroll-behavior: smooth; /* Hace que toda la navegación interna sea fluida */
+}
+
+/* --- ADAPTABILIDAD TOTAL PARA MÓVILES (Celulares y Tablets) --- */
+@media screen and (max-width: 768px) {
+    .book-container {
+        max-width: 100%;
+        height: 420px; /* Reducimos un poco la altura para pantallas chicas */
+        padding: 0 10px;
+    }
+
+    .book {
+        width: 280px; /* Ancho ideal para que quepa una página entera en cualquier celular */
+        height: 380px;
+        /* En móvil el libro ya no se desplaza horizontalmente al centro, se queda fijo */
+        transform: none !important; 
+    }
+
+    /* Modificamos los puntos de giro para que actúe como un visor de tarjetas superior */
+    .paper {
+        transform-origin: center; /* En móvil gira o cambia desde el centro */
+    }
+
+    .front, .back {
+        width: 100%;
+        height: 100%;
+        border-radius: 15px !important; /* Bordes redondeados parejos en móvil */
+        padding: 15px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    /* En móvil, para evitar el efecto de texto en espejo si el navegador procesa mal, 
+       ocultamos los reversos que no están activos */
+    .paper:not(.flipped) .back {
+        display: none;
+    }
+    .paper.flipped .front {
+        display: none;
+    }
+
+    /* Forzamos a que la página que ya se volteó se mueva por completo del campo visual */
+    .paper.flipped {
+        transform: translateX(-150%) rotate(-10deg) !important; /* Se desliza hacia la izquierda de forma fluida */
+        opacity: 0;
+    }
+
+    /* Ajuste de las imágenes internas en pantallas móviles */
+    .content img {
+        max-height: 120px !important; /* Imagen un poco más pequeña para dar aire al texto */
+        margin-bottom: 10px !important;
+    }
+
+    .content h2 {
+        font-size: 1.15rem;
+    }
+
+    .content p {
+        font-size: 0.8rem;
+    }
+}
